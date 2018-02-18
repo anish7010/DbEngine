@@ -1,50 +1,46 @@
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-       
-        String query;
-        System.out.println("Please input your query : ");
-       
+    	//to be input by the user
+        String user_query;
         Scanner scanner = new Scanner(System.in);
-        query = scanner.nextLine();
+        System.out.println("Please input your query : ");
+        user_query = scanner.nextLine();
         
-        //space seperated values
-        String[] query_broken = query.split(" ");
-      
-        //matching with pattern for .csv       
-        Pattern p = Pattern.compile("[a-zA-Z0-9]+\\.csv");
-        Matcher m = p.matcher(query);
-        //all csv files
-        ArrayList<String> csv_files = new ArrayList<String>();
-        while(m.find()) {
-            csv_files.add(m.group());
-        }
-       
-        //split_where[0] gives before where and split_where[1] gives after where
-        String[] split_where = query.split(" where ");
-        /*split_where[1] gives the part after where
-        extra spaces before and after and so it doesnt split at bangalore/england*/
-        String[] conditions = split_where[1].split("( and | or )");
-       
-        //look up and look ahead so it doesnt return select and from
-        Pattern p1 = Pattern.compile("(?<=select)(.*)(?=from)");
-        Matcher m1 = p1.matcher(query);
-        String fields = null;
-        while(m1.find()){
-        	fields = m1.group();
-        }
-        //stores the fields to be displayed
-        String selected_fields[] = fields.split(",");
+        //object of QueryParameter class
+        QueryParamteter qp = new QueryParamteter();
+        qp.setQuery(user_query);
         
-        Pattern p2 = Pattern.compile("(?<=order by)(.*)");
-        Matcher m2 = p2.matcher(query);
+        //to make sure it is the query of this particular object
+        String query = qp.getQuery();
         
-        
-        scanner.close();
-        
-        
+        //reading a csv file
+        BufferedReader br = null;
+        try {
+			br = new BufferedReader(new FileReader("/home/anish7010/Documents/workspace-sts-3.9.2.RELEASE/CsvFileReader/csv/ipl.csv"));
+	        //got the column names
+			String line = br.readLine();
+	        line = br.readLine();
+	        String[] arr = line.split(",");
+	        
+	        
+	        
+	        
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
     }
 }
