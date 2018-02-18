@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Main {
@@ -14,33 +11,20 @@ class Main {
         
         //object of QueryParameter class
         QueryParamteter qp = new QueryParamteter();
-        qp.setQuery(user_query);
+        
         
         //to make sure it is the query of this particular object
         String query = qp.getQuery();
+        //object for performing methods on file
+        FileCheck fc = new FileCheck();
+        ArrayList<String[]> al = new ArrayList<>();
+        //contains all the data from the csv file in a 2d array format
+        al = fc.allData();
+        //contains the datatype of each column
+        ArrayList<String> data = fc.getDatatype(al);
         
-        //reading a csv file
-        BufferedReader br = null;
-        try {
-			br = new BufferedReader(new FileReader("/home/anish7010/Documents/workspace-sts-3.9.2.RELEASE/CsvFileReader/csv/ipl.csv"));
-	        //got the column names
-			String line = br.readLine();
-	        line = br.readLine();
-	        String[] arr = line.split(",");
-	        
-	        
-	        
-	        
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        
+        		
+        scanner.close();
     }
 }

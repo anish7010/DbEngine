@@ -3,6 +3,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueryParamteter {
+	//query to be performed
 	private String query;
 
 	public String getQuery() {
@@ -37,7 +38,7 @@ public class QueryParamteter {
 	/*making a string array for all the conditions
 	 * extra spaces before and after and so it doesnt split at bangalore/england*/
 	public String[] conditions(String query) {
-		String[] conditions = query.split("( and | or )");
+		String[] conditions = query.split("( and | or | not )");
 		return conditions;
 	}
 	//for finding the columns that need to be returned
